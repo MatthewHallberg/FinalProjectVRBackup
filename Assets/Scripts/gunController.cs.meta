@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 005c9d97ba164469cadfe5ca9cb7d73f
+timeCreated: 1492396250
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - shield: {instanceID: 0}
+  - spawnPoint: {instanceID: 0}
+  - Gun: {instanceID: 0}
+  - SpaceShip: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
