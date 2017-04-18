@@ -18,7 +18,7 @@ public class EnemyBehavior : MonoBehaviour {
 
 	void Update () {
 
-		if (gameObject != null) {
+		if (gameObject != null && player != null) {
 			
 			transform.Translate (Vector3.forward * 3f * Time.deltaTime);
 
@@ -86,8 +86,6 @@ public class EnemyBehavior : MonoBehaviour {
 				explosion.GetComponent<AudioSource> ().Play ();
 
 				CreateNewEnemy ();
-
-				Destroy (gameObject);
 			}
 		}
 	}
@@ -101,6 +99,7 @@ public class EnemyBehavior : MonoBehaviour {
 
 		newEnemy.transform.position = new Vector3(x,y,z);
 		transform.eulerAngles = new Vector3 (0f, transform.eulerAngles.y, transform.eulerAngles.z);
+		Destroy (gameObject);
 	}
 
 }
