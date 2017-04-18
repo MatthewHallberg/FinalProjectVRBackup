@@ -25,7 +25,7 @@ public class EnemyBehavior : MonoBehaviour {
 			float distance = Vector3.Distance (player.transform.position, transform.position);
 
 			//if distance to player is less than 20 start turn procedure
-			if (distance < 12 && !turnWasStarted) {
+			if (distance < 20 && !turnWasStarted) {
 				turnWasStarted = true;
 				StartCoroutine ("Turn");
 			}
@@ -45,7 +45,7 @@ public class EnemyBehavior : MonoBehaviour {
 		yield return new WaitForSeconds(UnityEngine.Random.Range(1f,4f));
 		turning = false;
 		turnWasStarted = false;
-		yield return new WaitForSeconds(UnityEngine.Random.Range(8f,13f));
+		yield return new WaitForSeconds(UnityEngine.Random.Range(10f,17f));
 		transform.LookAt(player.transform);
 		StartCoroutine ("Shoot");
 	}
