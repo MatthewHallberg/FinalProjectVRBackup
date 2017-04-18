@@ -22,6 +22,7 @@ public class gunController : MonoBehaviour
 	private GameObject bullet;
 	public GameObject spawnPoint;
 	public GameObject Gun;
+	public GameObject imageTarget;
 
 	// Use this for initialization
 	void Start ()
@@ -65,7 +66,6 @@ public class gunController : MonoBehaviour
 				audio.Play ();
 				nextFire = Time.time + fireRate;
 				bullet = Instantiate (Resources.Load ("bullet"), spawnPoint.transform.position, spawnPoint.transform.rotation) as GameObject;
-				bullet.GetComponent<Rigidbody> ().AddRelativeForce (spawnPoint.transform.forward * -5000);
 				Destroy (bullet, 5);
 				firing = false;
 			}

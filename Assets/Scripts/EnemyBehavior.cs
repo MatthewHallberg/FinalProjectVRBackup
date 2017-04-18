@@ -4,19 +4,27 @@ using System.Collections;
 public class EnemyBehavior : MonoBehaviour {
 
 	private GameObject player;
+	public GameObject spawnPoint;
 	private bool turning = false;
 	private bool turnWasStarted = false;
+	private bool shooting;
 	private int hitCount = 0;
+	private int frameCount = 0;
+	private int FrameDelta;
 
 	// Use this for initialization
 	void Start () {
 
-		player = GameObject.Find ("ARCamera");
+		player = GameObject.Find ("playerTarget");
 		transform.LookAt (player.transform);
-		StartCoroutine ("InitialShots");
+		spawnPoint.transform.LookAt(player.transform);
+		shooting = true;
+		FrameDelta = UnityEngine.Random.Range (90, 280);
 	}
 
 	void Update () {
+
+		frameCount++;
 
 		if (gameObject != null && player != null) {
 			
@@ -25,8 +33,9 @@ public class EnemyBehavior : MonoBehaviour {
 			float distance = Vector3.Distance (player.transform.position, transform.position);
 
 			//if distance to player is less than 20 start turn procedure
-			if (distance < 20 && !turnWasStarted) {
+			if (distance < 25 && !turnWasStarted) {
 				turnWasStarted = true;
+				StopAllCoroutines ();
 				StartCoroutine ("Turn");
 			}
 
@@ -34,40 +43,32 @@ public class EnemyBehavior : MonoBehaviour {
 				transform.eulerAngles += new Vector3 (0, 1f, 0);
 				transform.eulerAngles = new Vector3 (0f, transform.eulerAngles.y, transform.eulerAngles.z);
 			}
-		}
 
+			if (shooting && frameCount % FrameDelta == 0) {
+
+				Shoot ();
+			}
+		}
 	}
 
 	IEnumerator Turn(){
-		StopCoroutine ("Shoot");
-		StopCoroutine ("InitialShots");
 		turning = true;
+		shooting = false;
 		yield return new WaitForSeconds(UnityEngine.Random.Range(1f,4f));
 		turning = false;
-		turnWasStarted = false;
-		yield return new WaitForSeconds(UnityEngine.Random.Range(10f,17f));
+		yield return new WaitForSeconds(UnityEngine.Random.Range(5f,17f));
 		transform.LookAt(player.transform);
-		StartCoroutine ("Shoot");
+		spawnPoint.transform.LookAt(player.transform);
+		shooting = true;
+		StopAllCoroutines ();
+		turnWasStarted = false;
 	}
 
-	IEnumerator Shoot(){
-
-		while (true) {
-			GameObject enemyBullet = Instantiate (Resources.Load ("enemyBullet"), transform.position, transform.rotation) as GameObject;
+	void Shoot(){
+		
+			GameObject enemyBullet = Instantiate (Resources.Load ("enemyBullet"), spawnPoint.transform.position, spawnPoint.transform.rotation) as GameObject;
 			enemyBullet.GetComponent<AudioSource> ().Play ();
 			Destroy (enemyBullet, 5);
-			yield return new WaitForSeconds (UnityEngine.Random.Range(1f,3f));
-		}
-	}
-
-	IEnumerator InitialShots(){
-
-		while (true) {
-			yield return new WaitForSeconds (UnityEngine.Random.Range(2f,5f));
-			GameObject enemyBullet = Instantiate (Resources.Load ("enemyBullet"), transform.position, transform.rotation) as GameObject;
-			enemyBullet.GetComponent<AudioSource> ().Play ();
-			Destroy (enemyBullet, 5);
-		}
 	}
 
 

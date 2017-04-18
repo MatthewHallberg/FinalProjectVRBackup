@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\EnemyBehavior.cs" />
      <Compile Include="Assets\Scripts\EnemyBulletBehavior.cs" />
+     <Compile Include="Assets\Scripts\PlayerBulletBehavior.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\ShieldController.cs" />
      <Compile Include="Assets\Scripts\gunController.cs" />
